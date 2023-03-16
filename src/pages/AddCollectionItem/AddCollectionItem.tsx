@@ -6,11 +6,12 @@ import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 
 import FloatingLabel from "react-bootstrap/FloatingLabel";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import findFormErrors from "./formValidation";
 
 import { addCollection } from "../../services/collections";
+import { getGroups } from "../../services/groups";
 
 export interface Errors {
   name?: string;
@@ -22,7 +23,21 @@ export interface Errors {
 
 const AddCollectionItem: React.FC = () => {
   const [errors, setErrors] = useState<Errors>({});
+  const [disabledSelectGroup, setDisabledSelectGroup] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [groups, setGroups] = useState([
+    {
+      _id: "default",
+    },
+  ]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setGroups((await getGroups()).data);
+    };
+    fetchData();
+  }, []);
+
   const [form, setForm] = useState({
     name: "",
     value: 0,
@@ -35,7 +50,6 @@ const AddCollectionItem: React.FC = () => {
       [field]: value,
     });
   };
-  const [disabledSelectGroup, setDisabledSelectGroup] = useState(false);
 
   function cleanUp(form: any) {
     return setForm({
@@ -62,13 +76,20 @@ const AddCollectionItem: React.FC = () => {
       } else {
         setErrors({});
         setSuccess(true);
-        e.target.reset();
+        setForm({
+          name: "",
+          value: 0,
+          year: "",
+          group: "",
+        });
+        setGroups((await getGroups()).data);
       }
     }
   }
 
   function newGroup(e: any) {
     setDisabledSelectGroup(e.target.checked);
+    setField("group", "");
   }
 
   return (
@@ -98,7 +119,7 @@ const AddCollectionItem: React.FC = () => {
             <Col>
               <FloatingLabel
                 controlId="floatingValue"
-                label="Value"
+                label="Value $"
                 className="mb-3"
               >
                 <Form.Control
@@ -136,23 +157,23 @@ const AddCollectionItem: React.FC = () => {
           </Row>
           <Row>
             <Col>
-              <FloatingLabel controlId="group" label="Group" className="mb-3">
-                <Form.Select
-                  disabled={disabledSelectGroup}
-                  aria-label="group"
-                  onChange={(e) => setField("group", e.target.value)}
-                  isInvalid={!!errors.group}
-                >
-                  <option value="default" selected>
-                    Default
-                  </option>
-                </Form.Select>
-                {!disabledSelectGroup && (
+              {!disabledSelectGroup && (
+                <FloatingLabel controlId="group" label="Group" className="mb-3">
+                  <Form.Select
+                    aria-label="group"
+                    onChange={(e) => setField("group", e.target.value)}
+                    isInvalid={!!errors.group}
+                  >
+                    {groups.map((group) => (
+                      <option value={group._id}>{group._id}</option>
+                    ))}
+                  </Form.Select>
+
                   <Form.Control.Feedback type="invalid">
                     {errors.group}
                   </Form.Control.Feedback>
-                )}
-              </FloatingLabel>
+                </FloatingLabel>
+              )}
 
               <Form.Check
                 onChange={newGroup}
@@ -179,17 +200,17 @@ const AddCollectionItem: React.FC = () => {
                 </FloatingLabel>
               )}
             </Col>
-            {errors.general && (
-              <Alert key="danger" variant="danger">
-                {errors.general}
-              </Alert>
-            )}
-            {success && (
-              <Alert key="success" variant="success">
-                Item created.
-              </Alert>
-            )}
           </Row>
+          {errors.general && (
+            <Alert key="danger" variant="danger">
+              {errors.general}
+            </Alert>
+          )}
+          {success && (
+            <Alert key="success" variant="success">
+              Item created.
+            </Alert>
+          )}
 
           <Button variant="primary" type="submit" className="button-submit">
             Add Collection Item

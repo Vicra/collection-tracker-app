@@ -2,14 +2,10 @@ import axios from "axios";
 
 const host = process.env.BACKEND_API || "http://localhost:8080/collectives";
 
-export async function addCollection(form: any) {
+export async function getGroups() {
   const options = {
-    method: "POST",
-    url: `${host}`,
-    data: {
-      ...form,
-      value: Number(form.value),
-    },
+    method: "GET",
+    url: `${host}/groups`,
   };
 
   try {

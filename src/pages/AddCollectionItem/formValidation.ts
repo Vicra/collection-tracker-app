@@ -29,6 +29,9 @@ function findFormErrors(form: any, cleanUp: any) {
       }
     }
   });
+  if (!newErrors.value && value < 1) {
+    newErrors.value = "Only positive values allowed";
+  }
 
   return newErrors;
 }
