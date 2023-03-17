@@ -38,6 +38,7 @@ const ListAllItems: React.FC = () => {
           {items.map((item) => (
             <ItemCard {...item} />
           ))}
+          {!items.length && <h6>No items yet.</h6>}
         </Row>
       </Container>
     </>

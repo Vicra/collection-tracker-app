@@ -29,6 +29,7 @@ const ListCollectionItems: React.FC = () => {
           {groups.map((group) => (
             <GroupCard {...group} />
           ))}
+          {!groups.length && <h6>No items yet.</h6>}
         </Row>
       </Container>
     </>

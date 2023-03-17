@@ -31,7 +31,6 @@ export async function getCollections() {
 
   try {
     const response = await axios.request(options);
-    console.log("response", response);
     return { success: true, data: response.data };
   } catch (e: any) {
     return {
@@ -49,7 +48,6 @@ export async function deleteCollection(name: String) {
 
   try {
     const response = await axios.request(options);
-    console.log("response", response);
     return { success: true, data: response.data };
   } catch (e: any) {
     return {
@@ -67,7 +65,6 @@ export async function getCollectionByName(name: String) {
 
   try {
     const response = await axios.request(options);
-    console.log("response", response);
     return { success: true, data: response.data };
   } catch (e: any) {
     return {
