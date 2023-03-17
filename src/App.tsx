@@ -4,7 +4,7 @@ import Navbar from "./common/Navbar";
 import AddCollectionItem from "./pages/AddCollectionItem";
 
 import "./App.css";
-import ListCollectionItems from "./pages/ListCollectionItems";
+import TabCollections from "./pages/TabCollections/TabCollections";
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/add" element={<AddCollectionItem />} />
-          <Route path="/" element={<ListCollectionItems />} />
+          <Route path="/" element={<TabCollections />} />
         </Routes>
       </BrowserRouter>
     </>

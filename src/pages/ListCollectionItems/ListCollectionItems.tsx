@@ -24,7 +24,7 @@ const ListCollectionItems: React.FC = () => {
   return (
     <>
       <Container>
-        <h1>List Collection Items</h1>
+        <h1>Collection Items By Group</h1>
         <Row xs={1} sm={2} md={3} lg={4}>
           {groups.map((group) => (
             <GroupCard {...group} />
