@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const host =
-  "http://165.22.188.150/collectives" || "http://localhost:8080/collectives";
+  "https://collectiontrackerapi.lat/collectives" ||
+  "http://localhost:8080/collectives";
 
 export async function getGroups() {
   const options = {
