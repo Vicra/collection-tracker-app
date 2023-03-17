@@ -1,5 +1,4 @@
 import Card from "react-bootstrap/Card";
-import Nav from "react-bootstrap/Nav";
 
 import { Group } from "../../features/groupsSlice";
 import { Collection } from "react-bootstrap-icons";
