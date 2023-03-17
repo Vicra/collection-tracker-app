@@ -40,3 +40,21 @@ export async function getCollections() {
     };
   }
 }
+
+export async function deleteCollection(name: String) {
+  const options = {
+    method: "DELETE",
+    url: `${host}/${name}`,
+  };
+
+  try {
+    const response = await axios.request(options);
+    console.log("response", response);
+    return { success: true, data: response.data };
+  } catch (e: any) {
+    return {
+      success: false,
+      details: e.response.data.error.message,
+    };
+  }
+}
