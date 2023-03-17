@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const host = process.env.BACKEND_API || "http://localhost:8080/collectives";
+const host =
+  "http://165.22.188.150/collectives" || "http://localhost:8080/collectives";
 
 export async function addCollection(form: any) {
   const options = {
