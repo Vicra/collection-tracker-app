@@ -3,6 +3,8 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
+import ButtonToolbar from "react-bootstrap/ButtonToolbar";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Alert from "react-bootstrap/Alert";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 
@@ -213,9 +215,19 @@ const AddCollectionItem: React.FC = () => {
             </Alert>
           )}
 
-          <Button variant="primary" type="submit" className="button-submit">
-            Add Collection Item
-          </Button>
+          <ButtonToolbar>
+            <ButtonGroup className="me-2">
+              <Button variant="primary" type="submit" className="button-submit">
+                Add Collection Item
+              </Button>
+            </ButtonGroup>
+
+            <ButtonGroup className="me-2">
+              <Button href="/" variant="outline-secondary">
+                Back to Item View
+              </Button>
+            </ButtonGroup>
+          </ButtonToolbar>
         </Form>
       </Container>
     </>

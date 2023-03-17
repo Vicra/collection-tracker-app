@@ -5,11 +5,7 @@ import ListCollectionItems from "../ListCollectionItems";
 
 function TabCollections() {
   return (
-    <Tabs
-      defaultActiveKey="profile"
-      id="uncontrolled-tab-example"
-      className="mb-3"
-    >
+    <Tabs defaultActiveKey="listGroups" id="uncontrolled-tab" className="mb-3">
       <Tab eventKey="listGroups" title="By Group" defaultChecked>
         <ListCollectionItems />
       </Tab>
