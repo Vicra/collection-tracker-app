@@ -4,6 +4,7 @@ import Navbar from "./common/Navbar";
 import AddCollectionItem from "./pages/AddCollectionItem";
 
 import "./App.css";
+import ListCollectionItems from "./pages/ListCollectionItems";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/add" element={<AddCollectionItem />} />
+          <Route path="/" element={<ListCollectionItems />} />
         </Routes>
       </BrowserRouter>
     </>
