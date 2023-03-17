@@ -4,14 +4,18 @@ import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
-
 import FloatingLabel from "react-bootstrap/FloatingLabel";
+
 import { useEffect, useState } from "react";
+import type { RootState } from "../../app/store";
+import { useSelector, useDispatch } from "react-redux";
 
 import findFormErrors from "./formValidation";
 
 import { addCollection } from "../../services/collections";
 import { getGroups } from "../../services/groups";
+
+import { updateGroups } from "../../features/groupsSlice";
 
 export interface Errors {
   name?: string;
@@ -25,15 +29,12 @@ const AddCollectionItem: React.FC = () => {
   const [errors, setErrors] = useState<Errors>({});
   const [disabledSelectGroup, setDisabledSelectGroup] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [groups, setGroups] = useState([
-    {
-      _id: "default",
-    },
-  ]);
+  const groups = useSelector((state: RootState) => state.groups.value);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
-      setGroups((await getGroups()).data);
+      dispatch(updateGroups((await getGroups()).data));
     };
     fetchData();
   }, []);
@@ -80,9 +81,9 @@ const AddCollectionItem: React.FC = () => {
           name: "",
           value: 0,
           year: "",
-          group: "",
+          group: "default",
         });
-        setGroups((await getGroups()).data);
+        dispatch(updateGroups((await getGroups()).data));
       }
     }
   }
