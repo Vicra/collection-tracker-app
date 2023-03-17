@@ -66,7 +66,7 @@ const AddCollectionItem: React.FC = () => {
     if (collectiveItemName) {
       fetchCollectiveItem(collectiveItemName);
     }
-  }, []);
+  });
 
   const setField = (field: string, value: string) => {
     setForm({

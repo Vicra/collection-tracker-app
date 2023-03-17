@@ -1,5 +1,4 @@
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import { useEffect } from "react";
 import type { RootState } from "../../app/store";
@@ -19,7 +18,7 @@ const ListCollectionItems: React.FC = () => {
       dispatch(updateGroups((await getGroups()).data));
     };
     fetchData();
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
