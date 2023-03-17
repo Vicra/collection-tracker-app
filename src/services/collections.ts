@@ -58,3 +58,44 @@ export async function deleteCollection(name: String) {
     };
   }
 }
+
+export async function getCollectionByName(name: String) {
+  const options = {
+    method: "GET",
+    url: `${host}/${name}`,
+  };
+
+  try {
+    const response = await axios.request(options);
+    console.log("response", response);
+    return { success: true, data: response.data };
+  } catch (e: any) {
+    return {
+      success: false,
+      details: e.response.data.error.message,
+    };
+  }
+}
+
+export async function updateCollection(form: any) {
+  const options = {
+    method: "PATCH",
+    url: `${host}/${form.oldName}`,
+    data: {
+      name: form.name,
+      value: Number(form.value),
+      year: form.year,
+      group: form.group,
+    },
+  };
+
+  try {
+    const response = await axios.request(options);
+    return { success: true, data: response.data };
+  } catch (e: any) {
+    return {
+      success: false,
+      details: e.response.data.error.message,
+    };
+  }
+}

@@ -32,7 +32,7 @@ const ItemCard: React.FC<Item> = (props: any) => {
       <Card.Body>
         <ButtonToolbar>
           <ButtonGroup className="me-2">
-            <Button href={"/edit?name=" + props.name} variant="outline-primary">
+            <Button href={"/add?name=" + props.name} variant="outline-primary">
               Edit
             </Button>
           </ButtonGroup>

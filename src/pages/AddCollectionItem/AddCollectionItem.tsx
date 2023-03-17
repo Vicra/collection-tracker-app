@@ -11,10 +11,15 @@ import FloatingLabel from "react-bootstrap/FloatingLabel";
 import { useEffect, useState } from "react";
 import type { RootState } from "../../app/store";
 import { useSelector, useDispatch } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 
 import findFormErrors from "./formValidation";
 
-import { addCollection } from "../../services/collections";
+import {
+  addCollection,
+  updateCollection,
+  getCollectionByName,
+} from "../../services/collections";
 import { getGroups } from "../../services/groups";
 
 import { updateGroups } from "../../features/groupsSlice";
@@ -28,25 +33,41 @@ export interface Errors {
 }
 
 const AddCollectionItem: React.FC = () => {
+  const [searchParams] = useSearchParams();
   const [errors, setErrors] = useState<Errors>({});
   const [disabledSelectGroup, setDisabledSelectGroup] = useState(false);
   const [success, setSuccess] = useState(false);
   const groups = useSelector((state: RootState) => state.groups.value);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      dispatch(updateGroups((await getGroups()).data));
-    };
-    fetchData();
-  }, []);
-
+  const collectiveItemName: String = searchParams.get("name") || "";
+  const isUpdate = !!collectiveItemName;
   const [form, setForm] = useState({
     name: "",
     value: 0,
     year: "",
     group: "default",
   });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      dispatch(updateGroups((await getGroups()).data));
+    };
+    fetchData();
+
+    const fetchCollectiveItem = async (collectiveItemName: String) => {
+      const collection = (await getCollectionByName(collectiveItemName)).data;
+      if (!form.name && collectiveItemName) {
+        setForm({
+          ...collection,
+        });
+      }
+    };
+
+    if (collectiveItemName) {
+      fetchCollectiveItem(collectiveItemName);
+    }
+  }, []);
+
   const setField = (field: string, value: string) => {
     setForm({
       ...form,
@@ -69,8 +90,15 @@ const AddCollectionItem: React.FC = () => {
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
     } else {
-      const response = await addCollection(form);
-      console.log(response);
+      let response;
+      if (isUpdate) {
+        response = await updateCollection({
+          ...form,
+          oldName: collectiveItemName,
+        });
+      } else {
+        response = await addCollection(form);
+      }
       if (!response.success) {
         setErrors({
           ...errors,
@@ -209,17 +237,34 @@ const AddCollectionItem: React.FC = () => {
               {errors.general}
             </Alert>
           )}
-          {success && (
+          {success && !isUpdate && (
             <Alert key="success" variant="success">
               Item created.
             </Alert>
           )}
 
+          {success && isUpdate && (
+            <Alert key="success" variant="success">
+              Item updated.
+            </Alert>
+          )}
+
           <ButtonToolbar>
             <ButtonGroup className="me-2">
-              <Button variant="primary" type="submit" className="button-submit">
-                Add Collection Item
-              </Button>
+              {isUpdate && (
+                <Button variant="info" type="submit" className="button-submit">
+                  Update Collection Item
+                </Button>
+              )}
+              {!isUpdate && (
+                <Button
+                  variant="primary"
+                  type="submit"
+                  className="button-submit"
+                >
+                  Add Collection Item
+                </Button>
+              )}
             </ButtonGroup>
 
             <ButtonGroup className="me-2">
