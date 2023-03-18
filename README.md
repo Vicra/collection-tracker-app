@@ -24,7 +24,7 @@ The build is minified and the filenames include the hashes.\
 
 https://collection-tracker.netlify.app/
 
-## File Stricture
+## File Structure
 
 ### `/app`
 
