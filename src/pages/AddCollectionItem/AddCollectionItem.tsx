@@ -28,6 +28,8 @@ export interface Errors {
   name?: string;
   value?: string;
   year?: string;
+  condition?: string;
+  location?: string;
   group?: string;
   general?: string;
 }
@@ -45,6 +47,8 @@ const AddCollectionItem: React.FC = () => {
     name: "",
     value: 0,
     year: "",
+    condition: "",
+    location: "",
     group: "default",
   });
 
@@ -80,6 +84,8 @@ const AddCollectionItem: React.FC = () => {
       name: form.name ? form.name.trim() : "",
       value: form.value ? form.value : 0,
       year: form.year ? form.year.trim() : "",
+      condition: form.condition ? form.condition.trim() : "",
+      location: form.location ? form.location.trim() : "",
       group: form.group ? form.group.trim() : "",
     });
   }
@@ -111,6 +117,8 @@ const AddCollectionItem: React.FC = () => {
           name: "",
           value: 0,
           year: "",
+          condition: "",
+          location: "",
           group: "default",
         });
         dispatch(updateGroups((await getGroups()).data));
@@ -126,7 +134,8 @@ const AddCollectionItem: React.FC = () => {
   return (
     <>
       <Container>
-        <h1>Add Collection Item</h1>
+        {isUpdate && <h1>Update Collection Item</h1>}
+        {!isUpdate && <h1>Add Collection Item</h1>}
         <Form onSubmit={handleSubmit} id="add-collection-form">
           <Row>
             <Col>
@@ -180,8 +189,55 @@ const AddCollectionItem: React.FC = () => {
                   isInvalid={!!errors.year}
                   value={form.year}
                 />
+                <Form.Text className="text-muted">
+                  ie: 2000 B.C - 2023
+                </Form.Text>
                 <Form.Control.Feedback type="invalid">
                   {errors.year}
+                </Form.Control.Feedback>
+              </FloatingLabel>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <FloatingLabel
+                controlId="floatingCondition"
+                label="Condition"
+                className="mb-3"
+              >
+                <Form.Control
+                  type="string"
+                  placeholder="item condition"
+                  onChange={(e) => setField("condition", e.target.value)}
+                  isInvalid={!!errors.condition}
+                  value={form.condition}
+                />
+                <Form.Text className="text-muted">
+                  ie: new, used, good, acceptable
+                </Form.Text>
+                <Form.Control.Feedback type="invalid">
+                  {errors.condition}
+                </Form.Control.Feedback>
+              </FloatingLabel>
+            </Col>
+            <Col>
+              <FloatingLabel
+                controlId="floatingLocation"
+                label="Location"
+                className="mb-3"
+              >
+                <Form.Control
+                  type="string"
+                  placeholder="San Pedro Sula, Cortes, HN"
+                  onChange={(e) => setField("location", e.target.value)}
+                  isInvalid={!!errors.location}
+                  value={form.location}
+                />
+                <Form.Text className="text-muted">
+                  ie: San Pedro Sula, Cortes, HN
+                </Form.Text>
+                <Form.Control.Feedback type="invalid">
+                  {errors.location}
                 </Form.Control.Feedback>
               </FloatingLabel>
             </Col>

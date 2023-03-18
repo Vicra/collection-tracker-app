@@ -84,6 +84,8 @@ export async function updateCollection(form: any) {
       name: form.name,
       value: Number(form.value),
       year: form.year,
+      condition: form.condition,
+      location: form.location,
       group: form.group,
     },
   };

@@ -25,9 +25,29 @@ const ItemCard: React.FC<Item> = (props: any) => {
       </Card.Body>
       <Card.Body>
         <Card.Title>{props.name}</Card.Title>
-        <Card.Text>Value USD: {props.value}</Card.Text>
-        <Card.Text>Year: {props.year}</Card.Text>
-        <Card.Text>Group: {props.group}</Card.Text>
+        <Card.Text>
+          {props.value && (
+            <>
+              Value USD: {props.value} <br />
+            </>
+          )}
+          {props.year && (
+            <>
+              Year: {props.year} <br />
+            </>
+          )}
+          {props.group && (
+            <>
+              Group: {props.group} <br />
+            </>
+          )}
+          {props.condition && (
+            <>
+              Condition: {props.condition} <br />
+            </>
+          )}
+          {props.location && <>Location: {props.location}</>}
+        </Card.Text>
       </Card.Body>
       <Card.Body>
         <ButtonToolbar>
